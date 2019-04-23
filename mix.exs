@@ -21,6 +21,7 @@ defmodule SemanticLive.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:phoenix_html, "~> 2.13"},
       {:phoenix_live_view, github: "phoenixframework/phoenix_live_view"}
     ]
   end

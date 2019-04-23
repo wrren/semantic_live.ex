@@ -1,16 +1,15 @@
 defmodule SemanticLive.Search do
   use SemanticLive
+  alias Phoenix.HTML.Form
 
-  def mount(%{search: fun, name: name} = session, socket) do
+  def mount(%{search: fun, name: name, form: form}, socket) do
     socket = socket
     |> assign(:results,   [])
     |> assign(:search,    fun)
     |> assign(:query,     "")
     |> assign(:loading,   false)
-    |> assign(:value,     "")
-    |> assign(:name,      name)
-    |> assign(:on_select, session[:on_select])
-    |> assign(:tag,       session[:tag])
+    |> assign(:value,     Form.input_value(form, name))
+    |> assign(:name,      Form.input_name(form, name))
 
     {:ok, socket}
   end
@@ -46,12 +45,11 @@ defmodule SemanticLive.Search do
     send(self(), {:search, query})
     {:noreply, assign(socket, loading: true, query: query)}
   end
-  def handle_event("select", name, %{assigns: %{results: results, on_select: on_select, tag: tag}} = socket) do
+  def handle_event("select", name, %{assigns: %{results: results}} = socket) do
     case Enum.find(results, fn {^name, _} -> true; _ -> false end) do
       nil ->
         {:noreply, assign(socket, results: [], query: "")}
-      {_name, value} = result ->
-        if on_select != nil and tag != nil, do: send(on_select, {:result_selected, tag, result})
+      {_name, value} ->
         {:noreply, assign(socket, results: [], query: "", value: value)}
     end
   end
