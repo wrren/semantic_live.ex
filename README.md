@@ -30,9 +30,16 @@ given `name` will have its value set to that of the selected option, making it e
 
 ```elixir
 <%= live_render SemanticLive.Dropdown, session: %{
-  options: [{"Option A", 1}, {"Option B", 2}],
-  name:     "input_name"
+  form:     f,
+  options:  [{"Option A", 1}, {"Option B", 2}],
+  name:     :input_name
 } %>
+```
+
+Or, if importing `SemanticLive`, use the `dropdown` function:
+
+```elixir
+<%= dropdown f, :input_name, [{"Option A", 1}, {"Option B", 2}], @socket %>
 ```
 
 ### Search
@@ -43,9 +50,16 @@ result selected so that it can easily be used in a form.
 
 ```elixir
 <%= live_render SemanticLive.Search, session: %{
+  form:     f,
   search:   fn query -> Enum.filter([{"Option A", 1}, {"Option B", 2}], fn{name, _value} -> String.contains(name, query) end),
-  name:     "input_name"
+  name:     :input_name
 } %>
+```
+
+Or, if importing `SemanticLive`, use the `search` function:
+
+```elixir
+<%= search f, :input_name, fn query -> Enum.filter([{"Option A", 1}, {"Option B", 2}], fn{name, _value} -> String.contains(name, query) end), @socket %>
 ```
 
 ### Flash
@@ -57,4 +71,10 @@ time, 3 seconds by default. Flash messages are displayed in a Semantic UI `messa
 <%= live_render SemanticLive.Flash, session: %{
   conn: @conn
 } %>
+```
+
+Or, if importing `SemanticLive`, use the `flash` function:
+
+```elixir
+<%= flash @conn, :info %>
 ```
