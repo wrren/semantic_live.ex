@@ -9,6 +9,8 @@ defmodule SemanticLive.MixProject do
       start_permanent:  Mix.env() == :prod,
       package:          package(),
       description:      description(),
+      source_url:       "https://github.com/wrren/semantic_live.ex",
+      homepage_url:     "https://github.com/wrren/semantic_live.ex",
       deps:             deps()
     ]
   end
