@@ -7,22 +7,18 @@ defmodule SemanticLive.MixProject do
       version:          "0.1.0",
       elixir:           "~> 1.8",
       start_permanent:  Mix.env() == :prod,
-      licenses:         licenses(),
-      links:            links(),
+      package:          package(),
       description:      description(),
       deps:             deps()
     ]
   end
 
-  def licenses do
+  def package do
     [
-      "MIT"
-    ]
-  end
-
-  def links do
-    [
-      {"GitHub Repository", "https://github.com/wrren/semantic_live.ex"}
+      licenses: ["MIT"],
+      links:    %{
+        "GitHub Repository" => "https://github.com/wrren/semantic_live.ex"
+      }
     ]
   end
 
