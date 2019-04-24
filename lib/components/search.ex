@@ -1,5 +1,5 @@
 defmodule SemanticLive.Search do
-  use SemanticLive
+  use Phoenix.LiveView
   alias Phoenix.HTML.Form
 
   def mount(%{search: fun, name: name, form: form}, socket) do

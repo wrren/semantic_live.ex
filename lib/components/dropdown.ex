@@ -1,5 +1,5 @@
 defmodule SemanticLive.Dropdown do
-  use SemanticLive
+  use Phoenix.LiveView
   alias Phoenix.HTML.Form
 
   def mount(%{options: options, name: name, form: form} = session, socket) do

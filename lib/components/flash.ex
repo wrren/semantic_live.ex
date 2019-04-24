@@ -1,5 +1,5 @@
 defmodule SemanticLive.Flash do
-  use SemanticLive
+  use Phoenix.LiveView
   import Phoenix.Controller, only: [get_flash: 2]
 
   @default_show_for 3_000
