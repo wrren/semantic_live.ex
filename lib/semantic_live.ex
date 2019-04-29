@@ -9,6 +9,10 @@ defmodule SemanticLive do
   to be a list of `{name, value}` tuples, and `opts` to be a keyword-list that can be used
   to modify dropdown behaviour.
 
+  If no form is provided, the dropdown will send a message to its parent LiveView in the form
+  {:option_selected, tag, {name, value}} where tag is used to differentiate between multiple
+  dropdowns.
+
   ## Options
 
     * `:class` - a binary containing space-delimited class names to be added to the
@@ -17,13 +21,23 @@ defmodule SemanticLive do
     * `:text` - initial text to be displayed in the dropdown when no option is selected. Defaults
       to 'Select'
   """
-  def dropdown(form, name, options, socket, opts \\ []) do
+  def dropdown(form, name, options, socket, opts) when is_list(options) do
     live_render(socket, SemanticLive.Dropdown, session: Map.merge(%{
       form:     form,
       name:     name,
       options:  options
     }, Map.new(opts)))
   end
+  def dropdown(form, name, options, socket) when is_list(options),
+    do: dropdown(form, name, options, socket, [])
+  def dropdown(options, tag, socket, opts) when is_list(options) do
+    live_render(socket, SemanticLive.Dropdown, session: Map.merge(%{
+      tag:      tag,
+      options:  options
+    }, Map.new(opts)))
+  end
+  def dropdown(options, tag, socket) when is_list(options),
+    do: dropdown(options, tag, socket, [])
 
   @doc """
   Renders a Search LiveView. The form should be a `Phoenix.HTML.Form`. Expects `fun` to be a function
